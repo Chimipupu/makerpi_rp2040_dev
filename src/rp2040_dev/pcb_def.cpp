@@ -137,13 +137,12 @@ void gpio_init(void)
 }
 
 /**
- * @brief 基板関連初期化
+ * @brief UART初期化
  * 
  */
-void pcb_init(void)
+void uart_init(void)
 {
-    // GPIO初期化
-    gpio_init();
+    Serial.begin(115200);
 }
 
 /**

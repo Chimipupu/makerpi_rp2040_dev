@@ -56,7 +56,7 @@
 #endif // PCB_MAKERPI_RP2040
 
 void gpio_init(void);
-void pcb_init(void);
+void uart_init(void);
 void btn_polling(void);
 
 #endif // PCB_DEF_HPP
