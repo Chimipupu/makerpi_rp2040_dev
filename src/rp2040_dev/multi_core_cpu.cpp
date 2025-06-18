@@ -13,6 +13,8 @@
 #include "app_main.hpp"
 #include <Arduino.h>
 
+static cpu_fifo_t s_cpu_fifo_t;
+
 /**
  * @brief CPU FIFOにデータを送信
  * 
@@ -35,21 +37,23 @@ void multi_core_cpu_tx_data(uint32_t data)
 
 /**
  * @brief CPU FIFOからデータを受信
- * 
- * @param p_data 受信データのポインタ
+ * @param p_data cpu_fifo_tのポインタ
  */
-void multi_core_cpu_rx_data(uint32_t *p_data)
+void multi_core_cpu_rx_data(cpu_fifo_t *p_data)
 {
+    uint8_t i;
     bool ret;
 
-    ret = rp2040.fifo.pop_nb(p_data);
-
-    // 受信成功
-    if (ret != false) { 
-        Serial.printf("[INFO]CPU FIFO RX Data: 0x%08X\r\n", *p_data);
-    // FIFOが空で受信失敗
-    } else {
-        Serial.printf("[ERR]CPU FIFO EMPTY!\r\n");
+    for(i = 0; i < CPU_FIFO_BUF_SIZE; i++) {
+        ret = rp2040.fifo.pop_nb(&p_data->rx_fifo_buf[i]);
+        // 受信成功
+        if (ret != false) {
+            Serial.printf("[INFO]CPU FIFO %d RX Data: 0x%08X\r\n", i, p_data->rx_fifo_buf[i]);
+        // FIFOが空で受信失敗
+        } else {
+            Serial.printf("[ERR]CPU FIFO EMPTY!\r\n");
+            break;
+        }
     }
 }
 
@@ -60,8 +64,6 @@ void multi_core_cpu_rx_data(uint32_t *p_data)
  */
 void cpu_core_0_init(void)
 {
-    uint32_t dmmy = CPU_FIFO_DATA_INIT_MSG;
-
     // GPIO初期化
     gpio_init();
 
@@ -69,7 +71,8 @@ void cpu_core_0_init(void)
     uart_init();
 
     // マルチコアCPU初期化
-    multi_core_cpu_tx_data(dmmy);
+    s_cpu_fifo_t.tx_fifo_buf[0] = CPU_FIFO_DATA_INIT_MSG;
+    multi_core_cpu_tx_data(s_cpu_fifo_t.tx_fifo_buf[0]);
 }
 
 /********** CPU Core 1 ***********/
