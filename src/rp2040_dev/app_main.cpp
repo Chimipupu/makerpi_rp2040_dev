@@ -28,17 +28,10 @@ void app_main_init(void)
  */
 void app_main_core_0(void)
 {
-    Serial.printf("[Core0] App Core0 Main\r\n");
-#if 1
-    // (DEBUG)ダミーデータをCPU Core1に送信
-    uint32_t i, dmmy;
-    for(i = 0; i < CPU_FIFO_BUF_SIZE; i++) {
-        dmmy = (i + 1) * 0x01010101;
-        multi_core_cpu_tx_data(dmmy);
-    }
-#endif
+    // Serial.printf("[Core0] App Core0 Main\r\n");
+
     btn_polling();
-    delay(1000);
+    // delay(1000);
 }
 
 /**
@@ -47,7 +40,7 @@ void app_main_core_0(void)
  */
 void app_main_core_1(void)
 {
-    Serial.printf("[Core1] App Core1 Main\r\n");
+    // Serial.printf("[Core1] App Core1 Main\r\n");
     cpu_fifo_rx_data_polling();
-    delay(950);
+    // delay(950);
 }
