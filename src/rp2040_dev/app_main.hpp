@@ -20,10 +20,6 @@
 #include "pico/stdlib.h"
 #include "hardware/clocks.h"
 
-#define OB_BLUE_LED_FADE_MS       30
-#define OB_BLUE_LED_BITFADE_MS    50
-#define LED_LOOP_CNT              8
-
 void app_main_init(void);
 void app_main(void);
 
