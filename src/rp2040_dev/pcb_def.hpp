@@ -24,6 +24,7 @@
     #define OB_BTN_1         21 // 基板ボタン1(GPIO21)
 
     // LED
+    #define OB_LED_BIT_NUM   13 // 基板 青LED 13bit分
     #define OB_LED_BIT_13    0  // 基板 青LED 13bit(GPIO0)
     #define OB_LED_BIT_12    1  // 基板 青LED 12bit(GPIO1)
     #define OB_LED_BIT_11    2  // 基板 青LED 11bit(GPIO2)
