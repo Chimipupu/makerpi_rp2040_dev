@@ -1,6 +1,6 @@
-# makerpi_rp2040_dev
+# rp2040_dev
 
-- Maker Pi RP2040の評価F/Wの個人開発リポジトリ
+- RP2040の評価F/Wの個人開発リポジトリ
 
 ## 開発環境
 
