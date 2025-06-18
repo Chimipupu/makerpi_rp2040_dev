@@ -27,6 +27,7 @@ typedef struct
 
 void multi_core_cpu_tx_data(uint32_t data);
 void multi_core_cpu_rx_data(cpu_fifo_t *p_data);
+void cpu_fifo_rx_data_polling(void);
 void cpu_core_0_init(void);
 void cpu_core_1_init(void);
 

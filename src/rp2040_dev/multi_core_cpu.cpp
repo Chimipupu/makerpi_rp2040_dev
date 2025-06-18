@@ -31,7 +31,7 @@ void multi_core_cpu_tx_data(uint32_t data)
         Serial.printf("[INFO]CPU FIFO TX Data: 0x%08X\r\n", data);
     // FIFOが満杯で送信失敗
     } else {
-        Serial.printf("[ERR]CPU FIFO OVF!\r\n");
+        Serial.printf("[ERR]CPU FIFO FULL!\r\n");
     }
 }
 
@@ -55,6 +55,15 @@ void multi_core_cpu_rx_data(cpu_fifo_t *p_data)
             break;
         }
     }
+}
+
+/**
+ * @brief CPU FIFOのデータをポーリング
+ * 
+ */
+void cpu_fifo_rx_data_polling(void)
+{
+    multi_core_cpu_rx_data(&s_cpu_fifo_t);
 }
 
 /********** CPU Core 0 ***********/
