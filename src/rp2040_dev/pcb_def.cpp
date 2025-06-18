@@ -15,9 +15,30 @@ static void show_single_led(uint8_t idx);
 static void show_bit_led(uint8_t val);
 
 #ifdef PCB_MAKERPI_RP2040
+
+volatile bool g_btn0_flag = false;
+volatile bool g_btn1_flag = false;
+
+/**
+ * @brief ボタン0の割り込みサービスルーチン
+ * 
+ */
+void btn0_ISR()
+{
+    g_btn0_flag = true;
+}
+
+/**
+ * @brief ボタン1の割り込みサービスルーチン
+ * 
+ */
+void btn1_ISR()
+{
+    g_btn1_flag = true;
+}
+
 // 基板の青LEDのGPIO
 const uint8_t g_ob_blue_leds[OB_LED_BIT_NUM] = {0, 1, 2, 3, 4, 5, 6, 7, 16, 17, 26, 27, 28};
-#endif // PCB_MAKERPI_RP2040
 
 // 指定したLEDだけ点灯
 static void show_single_led(uint8_t idx)
@@ -85,6 +106,7 @@ void led_bit_blink(uint32_t loop_cnt)
         delay(OB_LED_BIT_MS);
     }
 }
+#endif // PCB_MAKERPI_RP2040
 
 /**
  * @brief GPIO初期化
@@ -92,14 +114,20 @@ void led_bit_blink(uint32_t loop_cnt)
  */
 void gpio_init(void)
 {
+#ifdef PCB_MAKERPI_RP2040
     uint8_t i;
 
-#ifdef PCB_MAKERPI_RP2040
     // ボタン初期化
-    pinMode(OB_BTN_0, INPUT_PULLUP); // 基板ボタン0(GPIO20)
-    pinMode(OB_BTN_1, INPUT_PULLUP); // 基板ボタン1(GPIO21)
+    pinMode(OB_BTN_0, INPUT); // 基板ボタン0(GPIO20)
+    pinMode(OB_BTN_1, INPUT); // 基板ボタン1(GPIO21)
+    attachInterrupt(digitalPinToInterrupt(OB_BTN_0), // 割り込み
+                    btn0_ISR,                        // ISR
+                    FALLING);                        // Lowで割り込み
+    attachInterrupt(digitalPinToInterrupt(OB_BTN_1), // 割り込み
+                    btn1_ISR,                        // ISR
+                    FALLING);                        // Lowで割り込み
 
-    // 青LED初期化
+                    // 青LED初期化
     for (i = 0; i < OB_LED_BIT_NUM; i++)
     {
         pinMode(g_ob_blue_leds[i], OUTPUT);
@@ -114,5 +142,25 @@ void gpio_init(void)
  */
 void pcb_init(void)
 {
+    // GPIO初期化
     gpio_init();
+}
+
+/**
+ * @brief ボタンのポーリング
+ * 
+ */
+void btn_polling(void)
+{
+#ifdef PCB_MAKERPI_RP2040
+    if (g_btn0_flag != false) {
+        g_btn0_flag = false;
+        led_sequential_blink(LED_LOOP_CNT);
+    }
+
+    if (g_btn1_flag != false){
+        g_btn1_flag = false;
+        led_bit_blink(LED_LOOP_CNT);
+    }
+#endif // PCB_MAKERPI_RP2040
 }

@@ -20,8 +20,6 @@ void app_main_init(void)
 {
     // 基板初期化
     pcb_init();
-
-    led_sequential_blink(LED_LOOP_CNT);
 }
 
 /**
@@ -30,5 +28,5 @@ void app_main_init(void)
  */
 void app_main(void)
 {
-    led_bit_blink(LED_LOOP_CNT);
+    btn_polling();
 }
