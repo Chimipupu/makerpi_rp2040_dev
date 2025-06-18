@@ -11,8 +11,8 @@
 #include "pcb_def.hpp"
 #include <Arduino.h>
 
-static void show_single_led(uint8_t idx);
-static void show_bit_led(uint8_t val);
+static void show_single_led(uint32_t idx);
+static void show_bit_led(uint32_t val);
 
 #ifdef PCB_MAKERPI_RP2040
 
@@ -41,7 +41,7 @@ void btn1_ISR()
 const uint8_t g_ob_blue_leds[OB_LED_BIT_NUM] = {0, 1, 2, 3, 4, 5, 6, 7, 16, 17, 26, 27, 28};
 
 // 指定したLEDだけ点灯
-static void show_single_led(uint8_t idx)
+static void show_single_led(uint32_t idx)
 {
     uint8_t i;
 
@@ -52,7 +52,7 @@ static void show_single_led(uint8_t idx)
 }
 
 // 13bit値をLEDに表示
-static void show_bit_led(uint8_t val)
+static void show_bit_led(uint32_t val)
 {
     uint8_t i;
 
