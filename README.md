@@ -4,6 +4,11 @@
 
 ## 開発環境
 
+### デバッガ
+
+- [Debugprobe on pico](https://www.raspberrypi.com/documentation/microcontrollers/debug-probe.html)
+  - F/W ... [v2.2.2](https://github.com/raspberrypi/debugprobe/releases/tag/debugprobe-v2.2.2)
+
 ### H/W
 
 - 基板 ... 型番:[Maker Pi RP2040🔗](https://www.cytron.io/p-maker-pi-rp2040-simplifying-robotics-with-raspberry-pi-rp2040)
