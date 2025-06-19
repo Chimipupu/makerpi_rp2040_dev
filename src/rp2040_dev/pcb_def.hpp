@@ -18,6 +18,26 @@
 // #define PCB_RPI_PICO
 // #define PCB_RPI_PICO_W
 
+// VCC-GND RP2040
+#ifdef PCB_YD_RP2040
+    #define RGBLED_PIN               23  // Neopixel (GPIO 23)
+    #define OB_LED_PIN               25  // 青色LED (GPIO 25)
+    #define BUTTON_PIN               24  // ボタン (GPIO 24)
+    // I2C
+    #define I2C_SDA                  4   // I2C0 SDA
+    #define I2C_SCL                  5   // I2C0 SCL
+    #define I2C_1_SDA                6   // I2C1 SDA
+    #define I2C_1_SCL                7   // I2C1 SCL
+    // SPI
+    #define SPI_CS_PIN               1   // SPI0 CS
+    #define SPI_SCK_PIN              2   // SPI0 CLK
+    #define SPI_MISO_PIN             0   // SPI0 MISO
+    #define SPI_MOSI_PIN             3   // SPI0 MOSI
+    // UART
+    #define UART_TX_PIN              12  // UART0 TX
+    #define UART_RX_PIN              13  // UART0 RX
+#endif // PCB_YD_RP2040
+
 // Maker Pi RP2040
 #ifdef PCB_MAKERPI_RP2040
     // ボタン
